@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+@theme {
+  --animate-scroll: scroll 40s linear infinite;
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
