@@ -86,9 +86,10 @@ export const AuthProvider = ({ children }) => {
 
         if (data.user) {
             await fetchProfile(data.user);
+            return { success: true, user: data.user };
         }
 
-        return { success: true };
+        return { success: false, error: "No user returned from Supabase" };
     };
 
     const logout = async () => {

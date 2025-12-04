@@ -13,17 +13,22 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        console.log("Attempting login with:", email);
 
         try {
             const result = await login(email, password);
+            console.log("Login result:", result);
+
             if (result.success) {
+                console.log("Login successful, navigating to /admin");
                 navigate('/admin');
             } else {
+                console.error("Login failed:", result.error);
                 setError(result.error);
             }
         } catch (err) {
             setError('An unexpected error occurred.');
-            console.error(err);
+            console.error("Unexpected login error:", err);
         }
     };
 
