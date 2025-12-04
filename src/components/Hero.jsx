@@ -43,7 +43,28 @@ const Hero = () => {
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
                 <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                    <span className="block animate-fade-in-up">Welcome to TAC - Adehye Local Assembly</span>
+                    <span className="block">
+                        {"Welcome to TAC - Adehye Local Assembly".split("").map((char, index) => {
+                            // Determine animation based on index pattern: Left, Top, Right, Bottom
+                            const animations = [
+                                "animate-fly-in-left",
+                                "animate-fly-in-top",
+                                "animate-fly-in-right",
+                                "animate-fly-in-bottom"
+                            ];
+                            const animationClass = animations[index % 4];
+
+                            return (
+                                <span
+                                    key={index}
+                                    className={`inline-block ${animationClass} opacity-0`}
+                                    style={{ animationDelay: `${index * 0.05}s` }}
+                                >
+                                    {char === " " ? "\u00A0" : char}
+                                </span>
+                            );
+                        })}
+                    </span>
                 </h1>
                 <p className="mt-3 max-w-md mx-auto text-base text-gray-200 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
                     A place of worship, fellowship and growth.

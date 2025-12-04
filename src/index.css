@@ -35,4 +35,60 @@ body {
       transform: translateY(0);
     }
   }
+
+  --animate-fly-in-left: fly-in-left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+  @keyframes fly-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  --animate-fly-in-right: fly-in-right 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+  @keyframes fly-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  --animate-fly-in-top: fly-in-top 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+  @keyframes fly-in-top {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-fly-in-bottom: fly-in-bottom 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+  @keyframes fly-in-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
