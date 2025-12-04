@@ -96,7 +96,7 @@ export const MessageProvider = ({ children }) => {
 
     return (
         <MessageContext.Provider value={{ messages, addMessage, markAsRead, deleteMessage, loading }}>
-            {!loading && children}
+            {children}
         </MessageContext.Provider>
     );
 };

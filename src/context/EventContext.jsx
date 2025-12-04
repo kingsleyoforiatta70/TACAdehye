@@ -102,7 +102,7 @@ export const EventProvider = ({ children }) => {
 
     return (
         <EventContext.Provider value={{ events, loading, fetchEvents }}>
-            {!loading && children}
+            {children}
         </EventContext.Provider>
     );
 };

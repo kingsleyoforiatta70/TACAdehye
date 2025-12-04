@@ -140,7 +140,7 @@ export const ContentProvider = ({ children }) => {
 
     return (
         <ContentContext.Provider value={{ slides, addSlide, removeSlide, resetToDefaults, loading }}>
-            {!loading && children}
+            {children}
         </ContentContext.Provider>
     );
 };
