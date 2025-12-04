@@ -83,6 +83,11 @@ export const AuthProvider = ({ children }) => {
             console.error('Login error:', error);
             return { success: false, error: error.message };
         }
+
+        if (data.user) {
+            await fetchProfile(data.user);
+        }
+
         return { success: true };
     };
 
