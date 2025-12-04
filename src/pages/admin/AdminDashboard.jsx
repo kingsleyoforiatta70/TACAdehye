@@ -12,8 +12,10 @@ const AdminDashboard = () => {
 
     // Protect the route
     if (!user) {
+        console.log("AdminDashboard: No user found, redirecting to /login");
         return <Navigate to="/login" />;
     }
+    console.log("AdminDashboard: User found:", user.email);
 
     // Force profile completion
     if (!user.isProfileComplete) {
@@ -132,8 +134,8 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveTab('prayer')}
                                     className={`${activeTab === 'prayer'
-                                            ? 'border-blue-500 text-blue-600'
-                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         } w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Prayer Requests
@@ -141,8 +143,8 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveTab('testimony')}
                                     className={`${activeTab === 'testimony'
-                                            ? 'border-blue-500 text-blue-600'
-                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         } w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Testimonies
