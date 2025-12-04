@@ -26,7 +26,7 @@ const Navbar = () => {
                         <div className="flex-shrink-0 flex items-center">
                             <Link to="/" className="flex items-center">
                                 <img className="h-12 w-auto mr-2" src={churchLogo} alt="Church Logo" />
-                                <span className="font-bold text-2xl text-blue-900 hidden sm:block">TAC Adehye Local Assembly</span>
+                                <span className="font-bold text-2xl text-blue-900 hidden sm:block animate-fade-in-up">TAC - Adehye Local Assembly</span>
                             </Link>
                         </div>
                     </div>
