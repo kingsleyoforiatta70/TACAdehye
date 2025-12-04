@@ -70,9 +70,9 @@ const Hero = () => {
             </button>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-                <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                <h1 className="text-3xl tracking-tight font-extrabold text-white sm:text-4xl md:text-5xl">
                     <span className="block">
-                        {"Welcome to TAC - Adehye Local Assembly".split("").map((char, index) => {
+                        {"Welcome to TAC - Adehye Assembly".split("").map((char, index) => {
                             // Determine animation based on index pattern: Left, Top, Right, Bottom
                             const animations = [
                                 "animate-fly-in-left",

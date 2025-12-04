@@ -8,7 +8,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Church Info */}
                     <div className="col-span-1 md:col-span-1">
-                        <h3 className="text-2xl font-bold mb-4">TAC - Adehye Local Assembly</h3>
+                        <h3 className="text-2xl font-bold mb-4">TAC - Adehye Assembly</h3>
                         <p className="text-gray-400">
                             A place of worship, fellowship and growth. Join us to experience the love of God.
                         </p>
@@ -72,7 +72,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-                    <p className="text-base text-gray-400">&copy; {new Date().getFullYear()} TAC - Adehye Local Assembly. All rights reserved.</p>
+                    <p className="text-base text-gray-400">&copy; {new Date().getFullYear()} TAC - Adehye Assembly. All rights reserved.</p>
                 </div>
             </div>
         </footer>
