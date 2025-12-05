@@ -15,6 +15,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ContentProvider } from './context/ContentContext';
 import { MessageProvider } from './context/MessageContext';
 import { EventProvider } from './context/EventContext';
+import ScrollToTop from './components/ScrollToTop';
 import {
   AudioSermon,
   Videos,
@@ -30,6 +31,7 @@ function App() {
         <MessageProvider>
           <EventProvider>
             <Router>
+              <ScrollToTop />
               <div className="min-h-screen bg-white flex flex-col">
                 <Navbar />
                 <main className="flex-grow">

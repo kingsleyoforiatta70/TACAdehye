@@ -107,22 +107,22 @@ const Navbar = () => {
             {isOpen && (
                 <div className="md:hidden bg-blue-900" id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
-                        <Link to="/" className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Home</Link>
+                        <Link to="/" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Home</Link>
 
                         <div className="px-3 py-2 text-blue-200 font-bold">About Us</div>
-                        <Link to="/about/tenets" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Tenets</Link>
-                        <Link to="/about/our-belief" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Our Belief</Link>
-                        <Link to="/about/rules" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Rules of Conduct</Link>
-                        <Link to="/about/history" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Brief History</Link>
+                        <Link to="/about/tenets" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Tenets</Link>
+                        <Link to="/about/our-belief" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Our Belief</Link>
+                        <Link to="/about/rules" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Rules of Conduct</Link>
+                        <Link to="/about/history" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Brief History</Link>
 
                         <div className="px-3 py-2 text-blue-200 font-bold">Media</div>
-                        <Link to="/media/audio" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Audio Sermon</Link>
-                        <Link to="/media/videos" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Videos</Link>
-                        <Link to="/media/pictures" className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Pictures</Link>
+                        <Link to="/media/audio" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Audio Sermon</Link>
+                        <Link to="/media/videos" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Videos</Link>
+                        <Link to="/media/pictures" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Pictures</Link>
 
-                        <Link to="/live-stream" className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Live Stream</Link>
-                        <Link to="/calendar" className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Calendar</Link>
-                        <Link to="/contact" className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
+                        <Link to="/live-stream" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Live Stream</Link>
+                        <Link to="/calendar" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Calendar</Link>
+                        <Link to="/contact" onClick={() => setIsOpen(false)} className="text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
                     </div>
                 </div>
             )}
