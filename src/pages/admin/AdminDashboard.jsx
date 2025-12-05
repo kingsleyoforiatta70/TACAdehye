@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useMessages } from '../../context/MessageContext';
 import ProfileSetupForm from './ProfileSetupForm';
 import SlideManager from './SlideManager';
+import VideoManager from './VideoManager';
 
 const AdminDashboard = () => {
     const { user, logout, loading } = useAuth();
     const { messages, deleteMessage } = useMessages();
-    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer' or 'testimony'
+    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', or 'videos'
 
     if (loading) {
         return (
@@ -144,7 +141,7 @@ const AdminDashboard = () => {
                                     className={`${activeTab === 'prayer'
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Prayer Requests
                                 </button>
@@ -153,47 +150,63 @@ const AdminDashboard = () => {
                                     className={`${activeTab === 'testimony'
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Testimonies
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('videos')}
+                                    className={`${activeTab === 'videos'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    Videos
                                 </button>
                             </nav>
                         </div>
 
-                        {/* Message List */}
-                        <div className="divide-y divide-gray-200">
-                            {filteredMessages.length > 0 ? (
-                                filteredMessages.map((msg) => (
-                                    <div key={msg.id} className="p-6 hover:bg-gray-50 transition-colors">
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <h4 className="text-lg font-bold text-gray-900">{msg.name}</h4>
-                                                <p className="text-sm text-gray-500 mb-2">{msg.email} • {new Date(msg.date).toLocaleDateString()}</p>
-                                                <p className="text-gray-700 mt-2 whitespace-pre-wrap">{msg.message}</p>
-                                            </div>
-                                            <div className="flex space-x-2 ml-4">
-                                                <button
-                                                    onClick={() => handleReply(msg.email, msg.type)}
-                                                    className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                                >
-                                                    Reply
-                                                </button>
-                                                <button
-                                                    onClick={() => deleteMessage(msg.id)}
-                                                    className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                                >
-                                                    Delete
-                                                </button>
+                        {/* Content based on Active Tab */}
+                        {activeTab === 'videos' ? (
+                            <div className="p-4">
+                                <VideoManager />
+                            </div>
+                        ) : (
+                            /* Message List */
+                            <div className="divide-y divide-gray-200">
+                                {filteredMessages.length > 0 ? (
+                                    filteredMessages.map((msg) => (
+                                        <div key={msg.id} className="p-6 hover:bg-gray-50 transition-colors">
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h4 className="text-lg font-bold text-gray-900">{msg.name}</h4>
+                                                    <p className="text-sm text-gray-500 mb-2">{msg.email} • {new Date(msg.date).toLocaleDateString()}</p>
+                                                    <p className="text-gray-700 mt-2 whitespace-pre-wrap">{msg.message}</p>
+                                                </div>
+                                                <div className="flex space-x-2 ml-4">
+                                                    <button
+                                                        onClick={() => handleReply(msg.email, msg.type)}
+                                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                                    >
+                                                        Reply
+                                                    </button>
+                                                    <button
+                                                        onClick={() => deleteMessage(msg.id)}
+                                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                    ))
+                                ) : (
+                                    <div className="p-8 text-center text-gray-500">
+                                        No {activeTab === 'prayer' ? 'prayer requests' : 'testimonies'} found.
                                     </div>
-                                ))
-                            ) : (
-                                <div className="p-8 text-center text-gray-500">
-                                    No {activeTab === 'prayer' ? 'prayer requests' : 'testimonies'} found.
-                                </div>
-                            )}
-                        </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>
