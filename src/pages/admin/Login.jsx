@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import PageLayout from '../../components/PageLayout';
@@ -7,19 +7,21 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { login, user } = useAuth();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { login, user, loading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
+        if (!loading && user) {
             console.log("User detected in Login component, redirecting to /admin");
             navigate('/admin');
         }
-    }, [user, navigate]);
+    }, [user, loading, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setIsSubmitting(true);
         console.log("Attempting login with:", email);
 
         try {
@@ -32,12 +34,22 @@ const Login = () => {
             } else {
                 console.error("Login failed:", result.error);
                 setError(result.error);
+                setIsSubmitting(false);
             }
         } catch (err) {
             setError('An unexpected error occurred.');
             console.error("Unexpected login error:", err);
+            setIsSubmitting(false);
         }
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
 
     return (
         <PageLayout title="Admin Login">
@@ -70,6 +82,7 @@ const Login = () => {
                                     placeholder="Email address"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    disabled={isSubmitting}
                                 />
                             </div>
                             <div>
@@ -84,6 +97,7 @@ const Login = () => {
                                     placeholder="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    disabled={isSubmitting}
                                 />
                             </div>
                         </div>
@@ -91,14 +105,19 @@ const Login = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                                disabled={isSubmitting}
+                                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white ${isSubmitting ? 'bg-blue-800' : 'bg-blue-900 hover:bg-blue-800'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors`}
                             >
                                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                                    <svg className="h-5 w-5 text-blue-500 group-hover:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                                    </svg>
+                                    {isSubmitting ? (
+                                        <div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent"></div>
+                                    ) : (
+                                        <svg className="h-5 w-5 text-blue-500 group-hover:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
                                 </span>
-                                Sign in
+                                {isSubmitting ? 'Signing in...' : 'Sign in'}
                             </button>
                         </div>
                     </form>

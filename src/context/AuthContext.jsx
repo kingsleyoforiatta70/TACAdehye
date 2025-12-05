@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async (authUser) => {
+        let profile = null;
         try {
             const { data, error } = await supabase
                 .from('profiles')
@@ -58,17 +59,15 @@ export const AuthProvider = ({ children }) => {
             if (error && error.code !== 'PGRST116') {
                 console.error('Error fetching profile:', error);
             }
-
-            const profile = data || null;
-
+            profile = data;
+        } catch (error) {
+            console.error('Error in fetchProfile:', error);
+        } finally {
             setUser({
                 ...authUser,
                 isProfileComplete: !!profile,
                 profile: profile
             });
-        } catch (error) {
-            console.error('Error in fetchProfile:', error);
-        } finally {
             setLoading(false);
         }
     };
