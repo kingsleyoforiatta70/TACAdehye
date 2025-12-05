@@ -51,6 +51,7 @@ const Navbar = () => {
                                     <Link to="/about/our-belief" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Our Belief</Link>
                                     <Link to="/about/rules" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Rules of Conduct</Link>
                                     <Link to="/about/history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Brief History</Link>
+                                    <Link to="/about/local-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Local History</Link>
                                 </div>
                             )}
                         </div>
@@ -114,6 +115,7 @@ const Navbar = () => {
                         <Link to="/about/our-belief" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Our Belief</Link>
                         <Link to="/about/rules" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Rules of Conduct</Link>
                         <Link to="/about/history" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Brief History</Link>
+                        <Link to="/about/local-history" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Local History</Link>
 
                         <div className="px-3 py-2 text-blue-200 font-bold">Media</div>
                         <Link to="/media/audio" onClick={() => setIsOpen(false)} className="text-gray-100 hover:text-white block px-6 py-1 rounded-md text-sm">Audio Sermon</Link>

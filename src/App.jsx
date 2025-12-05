@@ -16,6 +16,7 @@ import { ContentProvider } from './context/ContentContext';
 import { MessageProvider } from './context/MessageContext';
 import { EventProvider } from './context/EventContext';
 import ScrollToTop from './components/ScrollToTop';
+import LocalHistory from './pages/LocalHistory';
 import {
   AudioSermon,
   Videos,
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/about/our-belief" element={<OurBelief />} />
                     <Route path="/about/rules" element={<RulesOfConduct />} />
                     <Route path="/about/history" element={<BriefHistory />} />
+                    <Route path="/about/local-history" element={<LocalHistory />} />
                     <Route path="/media/audio" element={<AudioSermon />} />
                     <Route path="/media/videos" element={<Videos />} />
                     <Route path="/media/pictures" element={<Pictures />} />
