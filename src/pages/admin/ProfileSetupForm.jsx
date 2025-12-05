@@ -9,6 +9,8 @@ const ProfileSetupForm = () => {
         role: ''
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -16,9 +18,18 @@ const ProfileSetupForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        updateProfile(formData);
+        setIsSubmitting(true);
+        console.log("ProfileSetupForm: Submitting profile update", formData);
+        try {
+            await updateProfile(formData);
+            // AuthContext should trigger a re-render or re-fetch resulting in AdminDashboard hiding this form
+        } catch (error) {
+            console.error("ProfileSetupForm: Error updating profile", error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (

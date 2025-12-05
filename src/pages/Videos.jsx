@@ -5,16 +5,19 @@ import { useVideos } from '../context/VideoContext';
 const Videos = () => {
     const { videos, loading } = useVideos();
     const [currentVideo, setCurrentVideo] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     // Set the first video as the default current video when videos are loaded
     useEffect(() => {
         if (videos.length > 0 && !currentVideo) {
             setCurrentVideo(videos[0]);
+            setIsPlaying(false); // Do not autoplay initial video
         }
     }, [videos, currentVideo]);
 
     const handleVideoClick = (video) => {
         setCurrentVideo(video);
+        setIsPlaying(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -51,7 +54,7 @@ const Videos = () => {
                         <div className="relative pb-[56.25%] h-0 bg-black rounded-xl overflow-hidden shadow-2xl">
                             <iframe
                                 className="absolute top-0 left-0 w-full h-full"
-                                src={`https://www.youtube.com/embed/${currentVideo.youtube_id}?autoplay=1&rel=0`}
+                                src={`https://www.youtube.com/embed/${currentVideo.youtube_id}?autoplay=${isPlaying ? '1' : '0'}&rel=0`}
                                 title={currentVideo.title}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen

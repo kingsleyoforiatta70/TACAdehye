@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useMessages } from '../../context/MessageContext';
 import ProfileSetupForm from './ProfileSetupForm';
 import SlideManager from './SlideManager';
 import VideoManager from './VideoManager';
@@ -8,12 +12,16 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', or 'videos'
 
     if (loading) {
+        console.log("AdminDashboard: Loading state active");
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
         );
     }
+
+    console.log("AdminDashboard: Loading complete. User state:", user);
+
 
     // Protect the route
     if (!user) {
@@ -24,12 +32,17 @@ const AdminDashboard = () => {
 
     // Force profile completion
     if (!user.isProfileComplete) {
+        console.log("AdminDashboard: Profile incomplete, rendering ProfileSetupForm");
         return <ProfileSetupForm />;
     }
 
-    const filteredMessages = messages.filter(msg =>
-        activeTab === 'prayer' ? msg.type === 'Prayer Request' : msg.type === 'Testimony'
-    );
+    console.log("AdminDashboard: Rendering dashboard content");
+
+    const filteredMessages = messages.filter(msg => {
+        if (activeTab === 'prayer') return msg.type === 'Prayer Request';
+        if (activeTab === 'testimony') return msg.type === 'Testimony';
+        return false;
+    });
 
     const handleReply = (email, subject) => {
         const mailtoLink = `mailto:${email}?subject=Re: ${subject}&body=Dear Member,%0D%0A%0D%0AThank you for reaching out to us.%0D%0A%0D%0ABest regards,%0D%0ATAC Adehye Local Church`;
