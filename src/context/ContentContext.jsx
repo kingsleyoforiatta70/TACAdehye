@@ -9,6 +9,7 @@ const ContentContext = createContext(null);
 
 export const ContentProvider = ({ children }) => {
     const [slides, setSlides] = useState([]);
+    const [pages, setPages] = useState({}); // { slug: { title, content } }
     const [loading, setLoading] = useState(true);
 
     // Default slides for fallback
@@ -20,15 +21,14 @@ export const ContentProvider = ({ children }) => {
     ];
 
     useEffect(() => {
-        fetchSlides();
-
-        // Force loading to false after 3 seconds to prevent hanging
-        const timeout = setTimeout(() => {
-            setSlides(prev => prev.length > 0 ? prev : defaultSlides);
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timeout);
+        const initData = async () => {
+            await Promise.all([fetchSlides(), fetchPages()]);
+            // Force loading to false after 3 seconds to prevent hanging
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
+        };
+        initData();
     }, []);
 
     const fetchSlides = async () => {
@@ -48,8 +48,52 @@ export const ContentProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching slides:', error);
             setSlides(defaultSlides);
-        } finally {
-            setLoading(false);
+        }
+    };
+
+    const fetchPages = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('pages')
+                .select('*');
+
+            if (error) {
+                // If table doesn't exist, we might get an error. We'll handle it nicely.
+                console.warn('Error fetching pages (table might not exist yet):', error);
+                return;
+            }
+
+            if (data) {
+                const pagesMap = {};
+                data.forEach(page => {
+                    pagesMap[page.slug] = page;
+                });
+                setPages(pagesMap);
+            }
+        } catch (error) {
+            console.error('Error fetching pages:', error);
+        }
+    };
+
+    const updatePage = async (slug, title, content) => {
+        try {
+            // Upsert: update if exists, insert if not
+            const { data, error } = await supabase
+                .from('pages')
+                .upsert({ slug, title, content }, { onConflict: 'slug' })
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            setPages(prev => ({
+                ...prev,
+                [slug]: data
+            }));
+            return data;
+        } catch (error) {
+            console.error('Error updating page:', error);
+            throw error;
         }
     };
 
@@ -139,7 +183,7 @@ export const ContentProvider = ({ children }) => {
     };
 
     return (
-        <ContentContext.Provider value={{ slides, addSlide, removeSlide, resetToDefaults, loading }}>
+        <ContentContext.Provider value={{ slides, addSlide, removeSlide, resetToDefaults, loading, pages, updatePage }}>
             {children}
         </ContentContext.Provider>
     );

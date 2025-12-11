@@ -1,7 +1,22 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
+import { useContent } from '../context/ContentContext';
 
 const LocalHistory = () => {
+    const { pages } = useContent();
+    const dbPage = pages ? pages['local_history'] : null;
+
+    if (dbPage && dbPage.content) {
+        return (
+            <PageLayout title={dbPage.title || "Local Assembly History"}>
+                <div
+                    className="prose prose-lg text-gray-700 mx-auto space-y-6"
+                    dangerouslySetInnerHTML={{ __html: dbPage.content }}
+                />
+            </PageLayout>
+        );
+    }
+
     return (
         <PageLayout title="Local Assembly History">
             <div className="max-w-4xl mx-auto px-4 py-8 text-center min-h-[40vh] flex flex-col items-center justify-center">

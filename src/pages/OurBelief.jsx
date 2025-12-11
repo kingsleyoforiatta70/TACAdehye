@@ -1,7 +1,22 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
+import { useContent } from '../context/ContentContext';
 
 const OurBelief = () => {
+    const { pages } = useContent();
+    const dbPage = pages ? pages['our_belief'] : null;
+
+    if (dbPage && dbPage.content) {
+        return (
+            <PageLayout title={dbPage.title || "Our Belief"}>
+                <div
+                    className="prose prose-lg text-gray-700 mx-auto space-y-6"
+                    dangerouslySetInnerHTML={{ __html: dbPage.content }}
+                />
+            </PageLayout>
+        );
+    }
+
     return (
         <PageLayout title="Our Belief">
             <div className="prose prose-lg text-gray-700 mx-auto">

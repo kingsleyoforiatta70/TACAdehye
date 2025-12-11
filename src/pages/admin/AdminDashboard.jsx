@@ -5,11 +5,13 @@ import { useMessages } from '../../context/MessageContext';
 import ProfileSetupForm from './ProfileSetupForm';
 import SlideManager from './SlideManager';
 import VideoManager from './VideoManager';
+import GalleryManager from './GalleryManager';
+import AboutManager from './AboutManager';
 
 const AdminDashboard = () => {
     const { user, logout, loading } = useAuth();
     const { messages, deleteMessage } = useMessages();
-    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', or 'videos'
+    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', 'videos', 'photos'
 
     if (loading) {
         console.log("AdminDashboard: Loading state active");
@@ -20,23 +22,17 @@ const AdminDashboard = () => {
         );
     }
 
-    console.log("AdminDashboard: Loading complete. User state:", user);
-
-
     // Protect the route
     if (!user) {
         console.log("AdminDashboard: No user found, redirecting to /login");
         return <Navigate to="/login" />;
     }
-    console.log("AdminDashboard: User found:", user.email);
 
     // Force profile completion
     if (!user.isProfileComplete) {
         console.log("AdminDashboard: Profile incomplete, rendering ProfileSetupForm");
         return <ProfileSetupForm />;
     }
-
-    console.log("AdminDashboard: Rendering dashboard content");
 
     const filteredMessages = messages.filter(msg => {
         if (activeTab === 'prayer') return msg.type === 'Prayer Request';
@@ -47,6 +43,67 @@ const AdminDashboard = () => {
     const handleReply = (email, subject) => {
         const mailtoLink = `mailto:${email}?subject=Re: ${subject}&body=Dear Member,%0D%0A%0D%0AThank you for reaching out to us.%0D%0A%0D%0ABest regards,%0D%0ATAC Adehye Local Church`;
         window.location.href = mailtoLink;
+    };
+
+    const renderTabContent = () => {
+        if (activeTab === 'videos') {
+            return (
+                <div className="p-4">
+                    <VideoManager />
+                </div>
+            );
+        }
+        if (activeTab === 'photos') {
+            return (
+                <div className="p-4">
+                    <GalleryManager />
+                </div>
+            );
+        }
+        if (activeTab === 'about') {
+            return (
+                <div className="p-4">
+                    <AboutManager />
+                </div>
+            );
+        }
+
+        // Default: Messages (Prayer or Testimony)
+        return (
+            <div className="divide-y divide-gray-200">
+                {filteredMessages.length > 0 ? (
+                    filteredMessages.map((msg) => (
+                        <div key={msg.id} className="p-6 hover:bg-gray-50 transition-colors">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h4 className="text-lg font-bold text-gray-900">{msg.name}</h4>
+                                    <p className="text-sm text-gray-500 mb-2">{msg.email} • {new Date(msg.date).toLocaleDateString()}</p>
+                                    <p className="text-gray-700 mt-2 whitespace-pre-wrap">{msg.message}</p>
+                                </div>
+                                <div className="flex space-x-2 ml-4">
+                                    <button
+                                        onClick={() => handleReply(msg.email, msg.type)}
+                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    >
+                                        Reply
+                                    </button>
+                                    <button
+                                        onClick={() => deleteMessage(msg.id)}
+                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="p-8 text-center text-gray-500">
+                        No {activeTab === 'prayer' ? 'prayer requests' : 'testimonies'} found.
+                    </div>
+                )}
+            </div>
+        );
     };
 
     return (
@@ -143,7 +200,7 @@ const AdminDashboard = () => {
 
                     <div className="mt-8 bg-white shadow rounded-lg overflow-hidden">
                         <div className="px-6 py-4 border-b border-gray-200">
-                            <h3 className="text-lg leading-6 font-medium text-gray-900">Messages</h3>
+                            <h3 className="text-lg leading-6 font-medium text-gray-900">Content Management</h3>
                         </div>
 
                         {/* Tabs */}
@@ -154,7 +211,7 @@ const AdminDashboard = () => {
                                     className={`${activeTab === 'prayer'
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                        } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Prayer Requests
                                 </button>
@@ -163,7 +220,7 @@ const AdminDashboard = () => {
                                     className={`${activeTab === 'testimony'
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                        } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Testimonies
                                 </button>
@@ -172,54 +229,33 @@ const AdminDashboard = () => {
                                     className={`${activeTab === 'videos'
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                        } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Videos
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('photos')}
+                                    className={`${activeTab === 'photos'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    Photos
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('about')}
+                                    className={`${activeTab === 'about'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    About Us
                                 </button>
                             </nav>
                         </div>
 
                         {/* Content based on Active Tab */}
-                        {activeTab === 'videos' ? (
-                            <div className="p-4">
-                                <VideoManager />
-                            </div>
-                        ) : (
-                            /* Message List */
-                            <div className="divide-y divide-gray-200">
-                                {filteredMessages.length > 0 ? (
-                                    filteredMessages.map((msg) => (
-                                        <div key={msg.id} className="p-6 hover:bg-gray-50 transition-colors">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h4 className="text-lg font-bold text-gray-900">{msg.name}</h4>
-                                                    <p className="text-sm text-gray-500 mb-2">{msg.email} • {new Date(msg.date).toLocaleDateString()}</p>
-                                                    <p className="text-gray-700 mt-2 whitespace-pre-wrap">{msg.message}</p>
-                                                </div>
-                                                <div className="flex space-x-2 ml-4">
-                                                    <button
-                                                        onClick={() => handleReply(msg.email, msg.type)}
-                                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                                    >
-                                                        Reply
-                                                    </button>
-                                                    <button
-                                                        onClick={() => deleteMessage(msg.id)}
-                                                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="p-8 text-center text-gray-500">
-                                        No {activeTab === 'prayer' ? 'prayer requests' : 'testimonies'} found.
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                        {renderTabContent()}
                     </div>
                 </div>
             </main>

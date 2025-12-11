@@ -1,7 +1,22 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
+import { useContent } from '../context/ContentContext';
 
 const Tenets = () => {
+    const { pages } = useContent();
+    const dbPage = pages ? pages['tenets'] : null;
+
+    if (dbPage && dbPage.content) {
+        return (
+            <PageLayout title={dbPage.title || "The Tenets"}>
+                <div
+                    className="prose prose-lg text-gray-700 mx-auto space-y-6"
+                    dangerouslySetInnerHTML={{ __html: dbPage.content }}
+                />
+            </PageLayout>
+        );
+    }
+
     return (
         <PageLayout title="The Tenets">
             <div className="prose prose-lg text-gray-700 mx-auto">
