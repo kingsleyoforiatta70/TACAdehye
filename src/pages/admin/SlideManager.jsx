@@ -84,12 +84,18 @@ const SlideManager = () => {
                                 className="object-cover w-full h-48"
                             />
                         </div>
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <div className="absolute top-2 right-2 md:inset-0 md:flex md:items-center md:justify-center md:bg-black md:bg-opacity-0 md:group-hover:bg-opacity-40 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 z-10">
                             <button
                                 onClick={() => removeSlide(slide.id)}
-                                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium shadow-sm transition-colors"
+                                className="bg-red-600 hover:bg-red-700 text-white transition-colors shadow-sm p-2 rounded-full md:px-4 md:py-2 md:rounded-md"
+                                title="Delete Slide"
                             >
-                                Delete
+                                {/* Mobile: Icon */}
+                                <svg className="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                {/* Desktop: Text */}
+                                <span className="hidden md:inline font-medium">Delete</span>
                             </button>
                         </div>
                     </div>

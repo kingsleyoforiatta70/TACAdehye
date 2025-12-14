@@ -7,11 +7,13 @@ import SlideManager from './SlideManager';
 import VideoManager from './VideoManager';
 import GalleryManager from './GalleryManager';
 import AboutManager from './AboutManager';
+import EventManager from './EventManager';
+import CalendarManager from './CalendarManager';
 
 const AdminDashboard = () => {
     const { user, logout, loading } = useAuth();
     const { messages, deleteMessage } = useMessages();
-    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', 'videos', 'photos'
+    const [activeTab, setActiveTab] = useState('prayer'); // 'prayer', 'testimony', 'videos', 'photos', 'events', 'about'
 
     if (loading) {
         console.log("AdminDashboard: Loading state active");
@@ -64,6 +66,20 @@ const AdminDashboard = () => {
             return (
                 <div className="p-4">
                     <AboutManager />
+                </div>
+            );
+        }
+        if (activeTab === 'events') {
+            return (
+                <div className="p-4">
+                    <EventManager />
+                </div>
+            );
+        }
+        if (activeTab === 'calendar') {
+            return (
+                <div className="p-4">
+                    <CalendarManager />
                 </div>
             );
         }
@@ -250,6 +266,24 @@ const AdminDashboard = () => {
                                         } w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     About Us
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('events')}
+                                    className={`${activeTab === 'events'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    Events
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('calendar')}
+                                    className={`${activeTab === 'calendar'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    Calendar
                                 </button>
                             </nav>
                         </div>

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useEvents } from '../context/EventContext';
 
 const Events = () => {
@@ -90,12 +91,12 @@ const Events = () => {
                                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                                     {event.description}
                                 </p>
-                                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center transition-colors">
+                                <Link to={`/events/${event.id}`} className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center transition-colors">
                                     Learn more
                                     <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     ))}
