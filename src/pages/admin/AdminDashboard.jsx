@@ -9,6 +9,7 @@ import GalleryManager from './GalleryManager';
 import AboutManager from './AboutManager';
 import EventManager from './EventManager';
 import CalendarManager from './CalendarManager';
+import LeaderManager from './LeaderManager';
 
 const AdminDashboard = () => {
     const { user, logout, loading } = useAuth();
@@ -80,6 +81,13 @@ const AdminDashboard = () => {
             return (
                 <div className="p-4">
                     <CalendarManager />
+                </div>
+            );
+        }
+        if (activeTab === 'leaders') {
+            return (
+                <div className="p-4">
+                    <LeaderManager />
                 </div>
             );
         }
@@ -284,6 +292,15 @@ const AdminDashboard = () => {
                                         } w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                                 >
                                     Calendar
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('leaders')}
+                                    className={`${activeTab === 'leaders'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        } w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm`}
+                                >
+                                    Leaders
                                 </button>
                             </nav>
                         </div>

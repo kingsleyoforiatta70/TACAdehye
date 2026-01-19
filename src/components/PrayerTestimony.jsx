@@ -21,7 +21,7 @@ const PrayerTestimony = () => {
 
                     {/* Prayer Request Card */}
                     <div
-                        className="group h-96 [perspective:1000px] cursor-pointer"
+                        className="group h-64 [perspective:1000px] cursor-pointer"
                         onClick={() => handleCardClick('prayer')}
                     >
                         <div className={`relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] ${flippedCard === 'prayer' ? '[transform:rotateY(180deg)]' : 'group-hover:[transform:rotateY(180deg)]'}`}>
@@ -59,7 +59,7 @@ const PrayerTestimony = () => {
 
                     {/* Testimony Card */}
                     <div
-                        className="group h-96 [perspective:1000px] cursor-pointer"
+                        className="group h-64 [perspective:1000px] cursor-pointer"
                         onClick={() => handleCardClick('testimony')}
                     >
                         <div className={`relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] ${flippedCard === 'testimony' ? '[transform:rotateY(180deg)]' : 'group-hover:[transform:rotateY(180deg)]'}`}>
